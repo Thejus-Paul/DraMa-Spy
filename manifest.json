@@ -1,0 +1,41 @@
+{
+  "manifest_version": 2,
+  "name": "DraMa Spy",
+  "description": "Tracks all watched KissAsian dramas and notifies the last watched episode.",
+  "version": "1.0",
+  "icons": {
+    "32": "icons/DraMa-Spy.svg",
+    "48": "icons/DraMa-Spy.svg",
+    "96": "icons/DraMa-Spy.svg"
+  },
+  "background": {
+    "scripts": ["background_script.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.kissasian.sh/*"],
+      "js": ["content_script.js"]
+    }
+  ],
+  "browser_action": {
+    "default_icon": {
+      "32": "icons/DraMa-Spy.svg",
+      "48": "icons/DraMa-Spy.svg",
+      "96": "icons/DraMa-Spy.svg"
+    },
+    "default_popup": "browserAction/index.html",
+    "default_title": "DraMa Spy"
+  },
+  "page_action": {
+    "default_icon": {
+      "32": "icons/DraMa-Spy.svg",
+      "48": "icons/DraMa-Spy.svg",
+      "96": "icons/DraMa-Spy.svg"
+    },
+    "default_popup": "pageAction/index.html",
+    "default_title": "DraMa Spy"
+  },
+  "options_ui": {
+    "page": "options/index.html"
+  }
+}
