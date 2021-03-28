@@ -9,9 +9,12 @@
 	browser.runtime.sendMessage(JSON.stringify({"command":"fetch"}))
 		.then(response => loadDraMaSpy(response))
 		.then(list => {
-			typeof(list) !== undefined ? 
-			browser.runtime.sendMessage(JSON.stringify({"command":"update","dramaList":list})) : 
-			console.log(list)
+			if(typeof(list) == "object") {
+				console.log(list);
+				browser.runtime.sendMessage(JSON.stringify({"command":"update","dramaList":list}));
+			} else {
+				console.log(typeof(list),JSON.stringify(list))
+			}
 		});
 
 	function loadDraMaSpy(dramaList) {
@@ -29,8 +32,10 @@
 			let didFind = Boolean(dramaList.find(item => item.name == drama));
 			if(didFind) {
 				dramaList.find(item => item.name == drama).lastWatched = currentEpisode;
+				return dramaList;
 			} else {
 				dramaList.push({name:drama, lastWatched:currentEpisode});
+				return dramaList;
 			}	
 			return dramaList;
 		}
