@@ -46,7 +46,16 @@
 			let genre = [...contentType];
 			let isMovie = Boolean(genre.find(item => item.text === "Movie"));
 			let message = isMovie ? ("Movie: " + drama) : ("Drama: " + drama);
-			console.log(message);
+			let didFind = Boolean(dramaList.find(item => item.name == drama));
+			if(didFind) {
+				let currentDrama = dramaList.find(item => item.name == drama)
+				console.log("You've watched this drama till episode",currentDrama.lastWatched);
+				let totalEpisodes = document.getElementsByClassName('episodeSub').length;
+				for(let i = (totalEpisodes - currentDrama.lastWatched); i <= totalEpisodes; i++) {
+					document.getElementsByClassName('episodeSub')[i].children.item(0).style.color = "lightgreen";
+					document.getElementsByClassName('episodeSub')[i].children.item(0).text += " 👀";
+				}
+			}
 		}
 	}
 })();

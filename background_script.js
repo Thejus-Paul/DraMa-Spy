@@ -1,10 +1,11 @@
-let dramaList = [{name:"Scripting Your Destiny",lastWatched:10 }];
+//let dramaList = [{name:"Scripting Your Destiny",lastWatched:10 }];
 
-updateList = (list) => (typeof(list.data) === Object) ? list.data : dramaList;
+// updateList = (list) => (typeof(list.data) === Object) ? list.data : dramaList;
+updateList = (list) => list.data;
 
 function notify(data) {
     if(JSON.parse(data).command == "update") {
-        dramaList = JSON.parse(data).dramaList;
+        let dramaList = JSON.parse(data).dramaList;
         console.log(dramaList);
         fetch("https://sponge-imminent-text.glitch.me/dramaspy/list", {
             method: 'post',
