@@ -1,14 +1,24 @@
-let dramaSpyList = {};
+let dramaList = [{name:"Justify Your Destiny",lastWatched:9}];
 
-// Uses cache to prevent re-fetching
-async function notify(message) {
-    if(dramaSpyList.length > 0) {
-        return dramaSpyList;
-    } else {
-        const response = await fetch('https://sponge-imminent-text.glitch.me/dramaspy/list');
-        const parseResponse = await response.json();
-        dramaSpyList = parseResponse.data;
-        return parseResponse.data;
+updateList = (list) => (typeof(list.data) === Object) ? list.data : dramaList;
+
+function notify(data) {
+    if(JSON.parse(data).command == "update") {
+        dramaList = JSON.parse(data).dramaList;
+        console.log(dramaList);
+        fetch("https://sponge-imminent-text.glitch.me/dramaspy/list", {
+            method: 'post',
+            mode: 'cors',
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify(dramaList)
+        }).then(console.log("Updated Sent!"));
+    }
+    else if(JSON.parse(data).command == "fetch") {
+        return fetch('https://sponge-imminent-text.glitch.me/dramaspy/list')
+        .then(response => response.json())
+        .then(response => updateList(response));
     }
 }
 

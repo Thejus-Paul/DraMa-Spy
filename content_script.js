@@ -6,11 +6,15 @@
 	window.hasRun = true;
 
 	// To fetch the current drama list
-	browser.runtime.sendMessage("fetch")
-		.then(response => loadDraMaSpy(response));
+	browser.runtime.sendMessage(JSON.stringify({"command":"fetch"}))
+		.then(response => loadDraMaSpy(response))
+		.then(list => {
+			typeof(list) !== undefined ? 
+			browser.runtime.sendMessage(JSON.stringify({"command":"update","dramaList":list})) : 
+			console.log(list)
+		});
 
-	function loadDraMaSpy(data) {
-		let dramaSpyList = data;
+	function loadDraMaSpy(dramaList) {
 		var URL = window.location.pathname;
 		var URLValues = URL.split('/');
 		var drama = URLValues[2].replaceAll('-',' ');
@@ -20,9 +24,15 @@
 			console.log("Movie: "+drama);
 
 		// On a drama's episode page
-		else if(URL.match(/Episode/i)) {
+		if(Boolean(URL.match(/Episode/i))) {
 			let currentEpisode = parseInt(URLValues[3].split('?')[0].split('-')[1]);
-			console.log(drama," Ep:",currentEpisode);
+			let didFind = Boolean(dramaList.find(item => item.name == drama));
+			if(didFind) {
+				dramaList.find(item => item.name == drama).lastWatched = currentEpisode;
+			} else {
+				dramaList.push({name:drama, lastWatched:currentEpisode});
+			}	
+			return dramaList;
 		}
 
 		// On the drama or movie description page
