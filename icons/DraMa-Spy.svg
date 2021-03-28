@@ -14,8 +14,8 @@
    viewBox="0 0 512.0 512.0"
    version="1.1"
    id="SVGRoot"
-   sodipodi:docname="DraMa Spy.svg"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07, custom)">
+   sodipodi:docname="DraMa-Spy.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)">
   <defs
      id="defs170">
     <linearGradient
@@ -57,16 +57,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="304.59407"
-     inkscape:cy="259.52756"
+     inkscape:cx="246.52"
+     inkscape:cy="351.39863"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g849"
      inkscape:document-rotation="0"
      showgrid="true"
      inkscape:window-width="1366"
      inkscape:window-height="743"
-     inkscape:window-x="-4"
-     inkscape:window-y="324"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
@@ -120,30 +120,20 @@
            cx="256.95084"
            cy="380.83173"
            r="55" />
-        <path
+        <ellipse
            style="opacity:1;fill:#392c2c;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.59122;stroke-opacity:1"
            id="path3802"
-           sodipodi:type="arc"
-           sodipodi:cx="256.00122"
-           sodipodi:cy="382.43912"
-           sodipodi:rx="40.001232"
-           sodipodi:ry="39.560871"
-           sodipodi:start="0"
-           sodipodi:end="6.272085"
-           sodipodi:arc-type="slice"
-           d="m 296.00245,382.43912 a 40.001232,39.560871 0 0 1 -39.89022,39.56072 40.001232,39.560871 0 0 1 -40.11163,-39.34115 40.001232,39.560871 0 0 1 39.66761,-39.77907 40.001232,39.560871 0 0 1 40.33178,39.12037 l -39.99877,0.43913 z" />
-        <path
+           cx="256.00122"
+           cy="382.43912"
+           rx="40.001232"
+           ry="39.560871" />
+        <ellipse
            style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.22476;stroke-opacity:1"
            id="path3804"
-           sodipodi:type="arc"
-           sodipodi:cx="232"
-           sodipodi:cy="366"
-           sodipodi:rx="15.000463"
-           sodipodi:ry="15"
-           sodipodi:start="0"
-           sodipodi:end="6.272085"
-           sodipodi:arc-type="slice"
-           d="m 247.00046,366 a 15.000463,15 0 0 1 -14.95883,14.99994 15.000463,15 0 0 1 -15.04186,-14.91669 15.000463,15 0 0 1 14.87535,-15.08273 15.000463,15 0 0 1 15.12442,14.83298 L 232,366 Z" />
+           cx="232"
+           cy="366"
+           rx="15.000463"
+           ry="15" />
       </g>
     </g>
     <path

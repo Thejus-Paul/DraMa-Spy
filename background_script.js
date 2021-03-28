@@ -1,4 +1,4 @@
-let dramaList = [{name:"Justify Your Destiny",lastWatched:9}];
+let dramaList = [{name:"Scripting Your Destiny",lastWatched:10 }];
 
 updateList = (list) => (typeof(list.data) === Object) ? list.data : dramaList;
 
