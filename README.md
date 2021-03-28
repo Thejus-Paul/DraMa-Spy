@@ -15,4 +15,4 @@ _The pre-built binaries will be avaliable soon!_
 
 [Thejus Paul](https://github.com/Thejus-Paul)
 
-See also the list of [contributors](https://github.com/thejus-paul/nurse-call/graphs/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/thejus-paul/drama-spy/graphs/contributors) who participated in this project.
