@@ -1,0 +1,2 @@
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QDraMa Spy\nA Firefox extension that tracks the KissAsian dramas, keeps track of the episodes and informs the last watched episode to the user.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QThejus Paul\\E$"}

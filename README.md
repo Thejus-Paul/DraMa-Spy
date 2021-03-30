@@ -3,9 +3,9 @@
 ## DraMa Spy
 A firefox extension that tracks the KissAsian dramas, keeps track of the episodes and informs the last watched episode to the user.
 
-## Getting Started
+## Downloads
 
-_The pre-built binaries will be avaliable soon!_
+The pre-built binaries are available [here](https://github.com/Thejus-Paul/DraMa-Spy/releases/tag/v1.0).
 
 ## Built With
 
