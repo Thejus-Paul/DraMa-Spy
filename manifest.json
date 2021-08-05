@@ -25,17 +25,5 @@
     },
     "default_popup": "browserAction/index.html",
     "default_title": "DraMa Spy"
-  },
-  "page_action": {
-    "default_icon": {
-      "32": "icons/DraMa-Spy.svg",
-      "48": "icons/DraMa-Spy.svg",
-      "96": "icons/DraMa-Spy.svg"
-    },
-    "default_popup": "pageAction/index.html",
-    "default_title": "DraMa Spy"
-  },
-  "options_ui": {
-    "page": "options/index.html"
   }
 }
