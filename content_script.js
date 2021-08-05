@@ -42,7 +42,7 @@
 
 		// On the drama or movie description page
 		let contentType = document.getElementsByClassName("dotUnder");
-		if((window.location.hostname === "kissasian.sh") && (contentType.length > 0)) {
+		if((window.location.hostname === "kissasian.li") && (contentType.length > 0)) {
 			let genre = [...contentType];
 			let isMovie = Boolean(genre.find(item => item.text === "Movie"));
 			let message = isMovie ? ("Movie: " + drama) : ("Drama: " + drama);
@@ -51,9 +51,10 @@
 				let currentDrama = dramaList.find(item => item.name == drama)
 				console.log("You've watched this drama till episode",currentDrama.lastWatched);
 				let totalEpisodes = document.getElementsByClassName('episodeSub').length;
+				let indexOfLastWatchedEpisode = totalEpisodes - currentDrama.lastWatched;
+				document.getElementsByClassName('episodeSub')[indexOfLastWatchedEpisode].children.item(0).text += " 👀";
 				for(let i = (totalEpisodes - currentDrama.lastWatched); i <= totalEpisodes; i++) {
 					document.getElementsByClassName('episodeSub')[i].children.item(0).style.color = "lightgreen";
-					document.getElementsByClassName('episodeSub')[i].children.item(0).text += " 👀";
 				}
 			}
 		}
