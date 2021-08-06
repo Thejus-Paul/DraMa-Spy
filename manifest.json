@@ -13,7 +13,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.kissasian.li/*"],
+      "matches": ["*://*.kissasian.li/*","*://*.kissorg.net/*"],
       "js": ["content_script.js"]
     }
   ],
@@ -23,7 +23,7 @@
       "48": "icons/DraMa-Spy.svg",
       "96": "icons/DraMa-Spy.svg"
     },
-    "default_popup": "browserAction/index.html",
+    "default_popup": "browser_action/build/index.html",
     "default_title": "DraMa Spy"
   }
 }

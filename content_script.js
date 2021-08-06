@@ -12,23 +12,17 @@
 			if(typeof(list) == "object") {
 				console.log(list);
 				browser.runtime.sendMessage(JSON.stringify({"command":"update","dramaList":list}));
-			} else {
-				console.log(typeof(list),JSON.stringify(list))
 			}
 		});
 
 	function loadDraMaSpy(dramaList) {
-		var URL = window.location.pathname;
-		var URLValues = URL.split('/');
-		var drama = URLValues[2].replaceAll('-',' ');
-
-		// On the movie watching page
-		if(URL.match(/full|movie/i))
-			console.log("Movie: "+drama);
-
 		// On a drama's episode page
-		if(Boolean(URL.match(/Episode/i))) {
-			let currentEpisode = parseInt(URLValues[3].split('?')[0].split('-')[1]);
+		if(window.location.hostname === "kissorg.net" && window.location.pathname.startsWith("/p/")) {
+			let tmp = document.querySelector("#navsubbar").children[0].innerText;
+			let drama = tmp.split(" ").slice(1,-1).join(" ");
+			let episodeSelector = document.getElementById("selectEpisode");
+			let currentEpisode = episodeSelector[episodeSelector.selectedIndex].value;
+			currentEpisode = Number(currentEpisode.split("?")[0].split("-")[1]);
 			let didFind = Boolean(dramaList.find(item => item.name == drama));
 			if(didFind) {
 				dramaList.find(item => item.name == drama).lastWatched = currentEpisode;
@@ -36,25 +30,28 @@
 			} else {
 				dramaList.push({name:drama, lastWatched:currentEpisode});
 				return dramaList;
-			}	
-			return dramaList;
+			}
 		}
 
 		// On the drama or movie description page
-		let contentType = document.getElementsByClassName("dotUnder");
-		if((window.location.hostname === "kissasian.li") && (contentType.length > 0)) {
-			let genre = [...contentType];
-			let isMovie = Boolean(genre.find(item => item.text === "Movie"));
-			let message = isMovie ? ("Movie: " + drama) : ("Drama: " + drama);
-			let didFind = Boolean(dramaList.find(item => item.name == drama));
-			if(didFind) {
-				let currentDrama = dramaList.find(item => item.name == drama)
-				console.log("You've watched this drama till episode",currentDrama.lastWatched);
-				let totalEpisodes = document.getElementsByClassName('episodeSub').length;
-				let indexOfLastWatchedEpisode = totalEpisodes - currentDrama.lastWatched;
-				document.getElementsByClassName('episodeSub')[indexOfLastWatchedEpisode].children.item(0).text += " 👀";
-				for(let i = (totalEpisodes - currentDrama.lastWatched); i <= totalEpisodes; i++) {
-					document.getElementsByClassName('episodeSub')[i].children.item(0).style.color = "lightgreen";
+		if(window.location.pathname.startsWith("/Drama/")) {
+			let drama = window.location.pathname.split("/")[2].split("-").join(" ")
+			let contentType = document.getElementsByClassName("dotUnder");
+			if((window.location.hostname === "kissasian.li") && (contentType.length > 0)) {
+				let genre = [...contentType];
+				let isMovie = Boolean(genre.find(item => item.text === "Movie"));
+				let message = isMovie ? ("Movie: " + drama) : ("Drama: " + drama);
+				console.log(message);
+				let didFind = Boolean(dramaList.find(item => item.name == drama));
+				if(didFind) {
+					let currentDrama = dramaList.find(item => item.name == drama)
+					console.log("You've watched this drama till episode",currentDrama.lastWatched);
+					let totalEpisodes = document.getElementsByClassName('episodeSub').length;
+					let indexOfLastWatchedEpisode = totalEpisodes - currentDrama.lastWatched;
+					document.getElementsByClassName('episodeSub')[indexOfLastWatchedEpisode].children.item(0).text += " 👀";
+					for(let i = (totalEpisodes - currentDrama.lastWatched); i <= totalEpisodes; i++) {
+						document.getElementsByClassName('episodeSub')[i].children.item(0).style.color = "lightgreen";
+					}
 				}
 			}
 		}
