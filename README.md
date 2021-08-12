@@ -5,7 +5,7 @@ A firefox extension that tracks the KissAsian dramas, keeps track of the episode
 
 ## Downloads
 
-The pre-built binaries are available [here](https://github.com/Thejus-Paul/DraMa-Spy/releases/tag/v1.0).
+The pre-built binaries are available [here](https://github.com/Thejus-Paul/DraMa-Spy/releases/latest).
 
 ## Built With
 
