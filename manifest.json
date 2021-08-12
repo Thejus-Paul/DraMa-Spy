@@ -23,7 +23,7 @@
       "48": "icons/DraMa-Spy.svg",
       "96": "icons/DraMa-Spy.svg"
     },
-    "default_popup": "browser_action/build/index.html",
+    "default_popup": "./browser_action/build/index.html",
     "default_title": "DraMa Spy"
   }
 }
