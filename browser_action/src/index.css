@@ -13,9 +13,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: url("https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1259&q=80");
+  background: url("./assets/images/background.jpg");
+  background-size: cover;
   background-position: 0 0;
-  background-attachment: scroll;
+  background-attachment: fixed;
   animation: bg-animate 60s alternate infinite;
   /*animation: bg-animate 2s alternate 1s infinite;*/
 }
