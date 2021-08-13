@@ -18,7 +18,6 @@ body {
   background-position: 0 0;
   background-attachment: fixed;
   animation: bg-animate 60s alternate infinite;
-  /*animation: bg-animate 2s alternate 1s infinite;*/
 }
 @keyframes bg-animate  {
   0% {
