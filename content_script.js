@@ -14,6 +14,11 @@
 				browser.runtime.sendMessage(JSON.stringify({"command":"update","dramaList":list}));
 			}
 		});
+	// To fetch the current drama info
+	browser.runtime.sendMessage(JSON.stringify({"command":"fetch_dramas"}))
+	.then(response => getDramaSummary(response));
+
+	// To convert image to Base64 
 	const getDataURL = (img) => {
 		const canvas = document.createElement('canvas');
 		const ctx = canvas.getContext('2d');
@@ -22,7 +27,8 @@
 		ctx.drawImage(img, 0, 0);
 		return canvas.toDataURL('image/jpeg');
 	}
-	const getDramaSummary = () => {
+	// To get drama details
+	const getDramaSummary = (dramas) => {
 		const summaryElements = document.querySelector(".bigChar").parentNode.children
 		const getData = (item) => summaryElements.item(item).innerText.split(":")[1];
 		let drama = {}
@@ -38,7 +44,8 @@
 		drama.image = getDataURL(document.querySelectorAll(".barContent img")[2])
 		drama.latestEpisode = Number(document.querySelector(".episodeSub").innerText.split(" ").pop())	
 		Object.freeze(drama);
-		return drama; 
+		dramas[drama.name] = drama;
+		browser.runtime.sendMessage(JSON.stringify({"command":"update_drama","drama":dramas}));
 	}
 
 	function loadDraMaSpy(dramaList) {
@@ -78,8 +85,7 @@
 						document.getElementsByClassName('episodeSub')[i].children.item(0).style.color = "lightgreen";
 					}
 				}
-			}
-			getDramaSummary()
+			}	
 		}
 	}
 })();
