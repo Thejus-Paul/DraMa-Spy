@@ -1,10 +1,25 @@
 import { useState, useEffect } from 'react';
 import CryptoJS from 'crypto-js';
 import './App.css';
+import { ReactElement } from 'react';
 
 interface dramaItems {
   name: string,
   lastWatched: number
+}
+
+interface dramaInfo {
+  _id: string,
+  name: string,
+  otherNames: Array<string>,
+  country: string,
+  genre: Array<string>,
+  aired: string,
+  status: string,
+  summary: string,
+  image: string,
+  latestEpisode: number,
+  hash: string
 }
 
 function App() {
@@ -13,6 +28,7 @@ function App() {
   const encrypt = (data: Array<dramaItems>,key: string) => CryptoJS.AES.encrypt(JSON.stringify(data),key).toString()
   const decrypt = (cipher: string,key: string) => JSON.parse(CryptoJS.AES.decrypt(cipher,key).toString(CryptoJS.enc.Utf8))
   
+  const [dramas, setDramas] = useState<Array<dramaInfo>>([])
   const [watchedList, setWatchedList] = useState<Array<dramaItems>>([])
   const [searchStr, setSearchStr] = useState<string>("")
   const [searchResults, setSearchResults] = useState<Array<dramaItems>>([])
@@ -21,6 +37,12 @@ function App() {
   useEffect(() => {
     if(localStorage.getItem("watchedList")) 
       setWatchedList(decrypt(String(localStorage.getItem("watchedList")),"test"))
+  },[])
+
+  useEffect(() => {
+    fetch('https://sponge-imminent-text.glitch.me/dramaspy/drama')
+		.then(response => response.json())
+    .then(response => setDramas(response))
   },[])
 
   useEffect(() => {
@@ -46,6 +68,12 @@ function App() {
       .includes(value.toLowerCase())))
   }
   
+  const fetchDramaImg = (name: string): ReactElement => {
+    const drama = dramas.find((item) => item.name === name)
+    if(drama) return <img src={drama.image} alt={drama.name} />
+    return <span></span>
+  }
+
   return (
     <div className="App"> 
       <div className="main">
@@ -59,6 +87,7 @@ function App() {
                 searchStr.length > 0 ? 
                 searchResults.map((drama,index) => {
                   return(<div className="drama_item" key={index}>
+                    
                     <div className="details">
                       <span>{drama.name}</span>
                       <span>Episodes: {drama.lastWatched}</span>
@@ -67,8 +96,9 @@ function App() {
                 }) :
                 watchedList.map((drama,index) => {
                   return(<div className="drama_item" key={index}>
+                    {fetchDramaImg(drama.name)}
                     <div className="details">
-                      <span>{drama.name}</span>
+                      <span><strong>{drama.name}</strong></span>
                       <span>Episodes: {drama.lastWatched}</span>
                     </div>
                   </div>);
