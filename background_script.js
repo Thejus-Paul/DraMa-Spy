@@ -21,7 +21,7 @@ function notify(data) {
 	else if(JSON.parse(data).command == "fetch_dramas") {
 		return fetch('https://sponge-imminent-text.glitch.me/dramaspy/drama')
 		.then(response => response.json())
-		.then(response => response.dramas);
+		.then(response => response);
 	}
 	else if(JSON.parse(data).command == "update_drama") {
 		let dramaList = JSON.parse(data).drama;

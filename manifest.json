@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.kissasian.li/*","*://*.kissorg.net/*"],
-      "js": ["content_script.js"]
+      "js": ["hashes.js","content_script.js"]
     }
   ],
   "browser_action": {

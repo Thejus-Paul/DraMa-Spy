@@ -1,5 +1,6 @@
 (function() {
 	// To prevent re-injecting of the `content_script` 
+	
 	if (window.hasRun) {
 		return;
 	}
@@ -14,9 +15,6 @@
 				browser.runtime.sendMessage(JSON.stringify({"command":"update","dramaList":list}));
 			}
 		});
-	// To fetch the current drama info
-	browser.runtime.sendMessage(JSON.stringify({"command":"fetch_dramas"}))
-	.then(response => getDramaSummary(response));
 
 	// To convert image to Base64 
 	const getDataURL = (img) => {
@@ -27,8 +25,10 @@
 		ctx.drawImage(img, 0, 0);
 		return canvas.toDataURL('image/jpeg');
 	}
+
 	// To get drama details
-	const getDramaSummary = (dramas) => {
+	const getDramaSummary = () => {
+		let SHA512 = new Hashes.SHA512
 		const summaryElements = document.querySelector(".bigChar").parentNode.children
 		const getData = (item) => summaryElements.item(item).innerText.split(":")[1];
 		let drama = {}
@@ -39,13 +39,13 @@
 		drama.aired = getData(4).trim()
 		const [status,views] = summaryElements.item(5).innerText.split(" ").filter(item => item.split(":")[1])
 		drama.status = status.split(":")[1].trim()
-		drama.views = views.split(":")[1].trim()
+		//drama.views = views.split(":")[1].trim()
 		drama.summary = summaryElements.item(7).innerText
 		drama.image = getDataURL(document.querySelectorAll(".barContent img")[2])
 		drama.latestEpisode = Number(document.querySelector(".episodeSub").innerText.split(" ").pop())	
+		drama.hash = SHA512.hex(JSON.stringify(drama))
 		Object.freeze(drama);
-		dramas[drama.name] = drama;
-		browser.runtime.sendMessage(JSON.stringify({"command":"update_drama","drama":dramas}));
+		browser.runtime.sendMessage(JSON.stringify({"command":"update_drama","drama":drama}));							
 	}
 
 	function loadDraMaSpy(dramaList) {
@@ -68,12 +68,14 @@
 
 		// On the drama or movie description page
 		if(window.location.pathname.startsWith("/Drama/")) {
+			getDramaSummary();
 			const drama = window.location.pathname.split("/")[2].split("-").join(" ")
 			const contentType = document.getElementsByClassName("dotUnder");
 			if((window.location.hostname === "kissasian.li") && (contentType.length > 0)) {
 				const genre = [...contentType];
 				const isMovie = Boolean(genre.find(item => item.text === "Movie"));
 				const message = isMovie ? ("Movie: " + drama) : ("Drama: " + drama);
+				console.log(message)
 				const didFind = Boolean(dramaList.find(item => item.name == drama));
 				if(didFind) {
 					const currentDrama = dramaList.find(item => item.name == drama)
