@@ -78,6 +78,8 @@
   .drama_item > img {
     border-radius: 8px;
     max-width: 100px;
+    border: 1px solid rgba(255,255,255,.75);
+    margin-right: 1rem;
   }
   .drama_item > .details {
     display: flex;
