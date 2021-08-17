@@ -51,10 +51,10 @@
 	function loadDraMaSpy(dramaList) {
 		// On a drama's episode page
 		if(window.location.hostname === "kissorg.net" && window.location.pathname.startsWith("/p/")) {
-			const tmp = document.querySelector("#navsubbar").children[0].innerText;
-			const drama = tmp.split(" ").slice(1,-1).join(" ");
+			let drama = document.querySelector("#navsubbar").children[0].innerText;
+			drama = drama.split(" ").slice(1,-1).join(" ");
 			const episodeSelector = document.getElementById("selectEpisode");
-			const currentEpisode = episodeSelector[episodeSelector.selectedIndex].value;
+			let currentEpisode = episodeSelector[episodeSelector.selectedIndex].value;
 			currentEpisode = Number(currentEpisode.split("?")[0].split("-")[1]);
 			const didFind = Boolean(dramaList.find(item => item.name == drama));
 			if(didFind) {

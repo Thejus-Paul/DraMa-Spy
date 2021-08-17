@@ -80,7 +80,7 @@ function App() {
       <div className="main">
         <div className="backdrop">
           <div className="header">
-            <input type="text" id="search" placeholder="Enter keyword" onChange={(e) => handleInput(e.target.value)}/>
+            <input type="text" id="search" placeholder="Enter keyword" onChange={(e) => handleInput(e.target.value)} autoFocus={true} />
           </div>
           <div className="body">
             <div className="dramas">
