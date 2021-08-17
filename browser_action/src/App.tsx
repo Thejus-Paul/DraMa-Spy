@@ -99,9 +99,13 @@ function App() {
                   return(<div className="drama_item" key={index}>
                     {fetchDramaImg(drama.name)}
                     <div className="details">
-                      <span><strong>{drama.name}</strong></span>
-                      <span>Last Watched: {drama.lastWatched}</span>
-                      <span><a href={`${hostname}/Drama/${drama.name.split(" ").join("-")}/Episode-${drama.lastWatched+1}`}>Resume</a></span>
+                      <strong>{drama.name}</strong>
+                      <span>
+                        <span>Last Watched: {drama.lastWatched}&nbsp;</span>
+                        <a href={`${hostname}/Drama/${drama.name.split(" ").join("-")}/Episode-${drama.lastWatched+1}`}>
+                          <img src="https://img.icons8.com/ios-glyphs/50/000000/circled-play.png" alt="Resume" width="20px" />
+                        </a>
+                      </span>
                     </div>
                   </div>);
                 }) 
