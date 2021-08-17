@@ -88,12 +88,17 @@ function App() {
                 searchStr.length > 0 ? 
                 searchResults.map((drama,index) => {
                   return(<div className="drama_item" key={index}>
-                    
-                    <div className="details">
-                      <span>{drama.name}</span>
-                      <span>Episodes: {drama.lastWatched}</span>
-                    </div>
-                  </div>);
+                  {fetchDramaImg(drama.name)}
+                  <div className="details">
+                    <strong>{drama.name}</strong>
+                    <span>
+                      <span>Last Watched: {drama.lastWatched}&nbsp;</span>
+                      <a href={`${hostname}/Drama/${drama.name.split(" ").join("-")}/Episode-${drama.lastWatched+1}`}>
+                        <img src="https://img.icons8.com/ios-glyphs/50/000000/circled-play.png" alt="Resume" width="20px" />
+                      </a>
+                    </span>
+                  </div>
+                </div>);
                 }) :
                 watchedList.map((drama,index) => {
                   return(<div className="drama_item" key={index}>
