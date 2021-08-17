@@ -1,6 +1,6 @@
 {
   "name": "drama-spy",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Tracks all watched KissAsian dramas and notifies the last watched episode.",
   "main": "index.js",
   "scripts": {
