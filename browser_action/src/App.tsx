@@ -23,6 +23,7 @@ interface dramaInfo {
 }
 
 function App() {
+  const hostname: string = "https://kissasian.li"
   const hash = (data: string) => CryptoJS.SHA3(data).toString();
   const verify = (hash1: string, hash2: string) => (hash1 === hash2) ? true : false;
   const encrypt = (data: Array<dramaItems>,key: string) => CryptoJS.AES.encrypt(JSON.stringify(data),key).toString()
@@ -99,7 +100,8 @@ function App() {
                     {fetchDramaImg(drama.name)}
                     <div className="details">
                       <span><strong>{drama.name}</strong></span>
-                      <span>Episodes: {drama.lastWatched}</span>
+                      <span>Last Watched: {drama.lastWatched}</span>
+                      <span><a href={`${hostname}/Drama/${drama.name.split(" ").join("-")}/Episode-${drama.lastWatched+1}`}>Resume</a></span>
                     </div>
                   </div>);
                 }) 
