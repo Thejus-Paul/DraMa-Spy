@@ -33,20 +33,25 @@ function App() {
   const [watchedList, setWatchedList] = useState<Array<dramaItems>>([])
   const [searchStr, setSearchStr] = useState<string>("")
   const [searchResults, setSearchResults] = useState<Array<dramaItems>>([])
+
+	// To fetch current hashes from localStorage
   const watchedListHash: string = String(localStorage.getItem("watchedListHash"))
 	const dramasListHash: string = String(localStorage.getItem("dramasListHash"))
 
-useEffect(() => {
-	if(localStorage.getItem("watchedList")) 
-		setWatchedList(decrypt(String(localStorage.getItem("watchedList")),"test"))
-	if(localStorage.getItem("dramasList"))
-		setDramas(JSON.parse(String(localStorage.getItem("dramasList"))))
-},[])
+	useEffect(() => {
+		// To set cached version of watched list
+		if(localStorage.getItem("watchedList")) 
+			setWatchedList(decrypt(String(localStorage.getItem("watchedList")),"test"))
+		// To set cached version of dramas
+		if(localStorage.getItem("dramasList"))
+			setDramas(JSON.parse(String(localStorage.getItem("dramasList"))))
+	},[])
 
-  useEffect(() => {
-    fetch('https://sponge-imminent-text.glitch.me/dramaspy/drama')
+	// To fetch and update dramas
+	useEffect(() => {
+		fetch('https://sponge-imminent-text.glitch.me/dramaspy/drama')
 		.then(response => response.json())
-    .then(response => {
+		.then(response => {
 			const stringifiedResponse = JSON.stringify(response)
 			const currentHash = hash(stringifiedResponse)
 			if(verify(currentHash,dramasListHash)) console.log("Dramas: No Change")
@@ -56,25 +61,24 @@ useEffect(() => {
 				window.localStorage.setItem("dramasListHash",currentHash)
 				console.log("Dramas: Cached Data")
 			}
-    })
-  },[dramasListHash])
+		})
+	},[dramasListHash])
 
-  useEffect(() => {
-    fetch('https://sponge-imminent-text.glitch.me/dramaspy/list')
+	// To fetch and update watched list
+	useEffect(() => {
+		fetch('https://sponge-imminent-text.glitch.me/dramaspy/list')
 		.then(response => response.json())
-    .then(response => {
-      const currentHash = hash(JSON.stringify(response.data))
-      if(verify(currentHash,watchedListHash)) console.log("Watched List: No Change")
-      else {
-        setWatchedList(response.data)
-        window.localStorage.setItem("watchedList",encrypt(response.data, "test").toString())
-        window.localStorage.setItem("watchedListHash",currentHash)
-        console.log("Watched List: Cached Data")
-      }
-    })
-  }, [watchedListHash]);
-
-	console.log(dramas);
+		.then(response => {
+			const currentHash = hash(JSON.stringify(response.data))
+			if(verify(currentHash,watchedListHash)) console.log("Watched List: No Change")
+			else {
+				setWatchedList(response.data)
+				window.localStorage.setItem("watchedList",encrypt(response.data, "test").toString())
+				window.localStorage.setItem("watchedListHash",currentHash)
+				console.log("Watched List: Cached Data")
+			}
+		})
+	}, [watchedListHash]);
 
   const handleInput = (value: string) => {
     setSearchStr(value);
