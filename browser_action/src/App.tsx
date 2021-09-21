@@ -33,33 +33,48 @@ function App() {
   const [watchedList, setWatchedList] = useState<Array<dramaItems>>([])
   const [searchStr, setSearchStr] = useState<string>("")
   const [searchResults, setSearchResults] = useState<Array<dramaItems>>([])
-  const localHash: string = String(localStorage.getItem("hashedList"))
+  const watchedListHash: string = String(localStorage.getItem("watchedListHash"))
+	const dramasListHash: string = String(localStorage.getItem("dramasListHash"))
 
-  useEffect(() => {
-    if(localStorage.getItem("watchedList")) 
-      setWatchedList(decrypt(String(localStorage.getItem("watchedList")),"test"))
-  },[])
+useEffect(() => {
+	if(localStorage.getItem("watchedList")) 
+		setWatchedList(decrypt(String(localStorage.getItem("watchedList")),"test"))
+	if(localStorage.getItem("dramasList"))
+		setDramas(JSON.parse(String(localStorage.getItem("dramasList"))))
+},[])
 
   useEffect(() => {
     fetch('https://sponge-imminent-text.glitch.me/dramaspy/drama')
 		.then(response => response.json())
-    .then(response => setDramas(response))
-  },[])
+    .then(response => {
+			const stringifiedResponse = JSON.stringify(response)
+			const currentHash = hash(stringifiedResponse)
+			if(verify(currentHash,dramasListHash)) console.log("Dramas: No Change")
+			else {
+				setDramas(response)
+				window.localStorage.setItem("dramasList",stringifiedResponse)
+				window.localStorage.setItem("dramasListHash",currentHash)
+				console.log("Dramas: Cached Data")
+			}
+    })
+  },[dramasListHash])
 
   useEffect(() => {
     fetch('https://sponge-imminent-text.glitch.me/dramaspy/list')
 		.then(response => response.json())
     .then(response => {
-      let currentHash = hash(JSON.stringify(response.data))
-      if(verify(currentHash,localHash)) console.log("Same Data")
+      const currentHash = hash(JSON.stringify(response.data))
+      if(verify(currentHash,watchedListHash)) console.log("Watched List: No Change")
       else {
         setWatchedList(response.data)
         window.localStorage.setItem("watchedList",encrypt(response.data, "test").toString())
-        window.localStorage.setItem("hashedList",currentHash)
-        console.log("Data Set")
+        window.localStorage.setItem("watchedListHash",currentHash)
+        console.log("Watched List: Cached Data")
       }
     })
-  }, [localHash]);
+  }, [watchedListHash]);
+
+	console.log(dramas);
 
   const handleInput = (value: string) => {
     setSearchStr(value);
