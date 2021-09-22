@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "eslint-plugin-prettier": "^4.0.0",
     "web-ext": "^6.2.0"
   },
   "devDependencies": {

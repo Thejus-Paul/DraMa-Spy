@@ -41,22 +41,15 @@
     // drama.views = views.split(":")[1].trim()
     drama.summary = summaryElements.item(7).innerText;
     drama.image = getDataURL(document.querySelectorAll('.barContent img')[2]);
-    drama.latestEpisode = Number(
-      document.querySelector('.episodeSub').innerText.split(' ').pop(),
-    );
+    drama.latestEpisode = Number(document.querySelector('.episodeSub').innerText.split(' ').pop());
     drama.hash = SHA512.hex(JSON.stringify(drama));
     Object.freeze(drama);
-    browser.runtime.sendMessage(
-      JSON.stringify({ command: 'update_drama', drama }),
-    );
+    browser.runtime.sendMessage(JSON.stringify({ command: 'update_drama', drama }));
   };
 
   function loadDraMaSpy(dramaList) {
     // On a drama's episode page
-    if (
-      window.location.hostname === 'kissorg.net'
-      && window.location.pathname.startsWith('/p/')
-    ) {
+    if (window.location.hostname === 'kissorg.net' && window.location.pathname.startsWith('/p/')) {
       let drama = document.querySelector('#navsubbar').children[0].innerText;
       drama = drama.split(' ').slice(1, -1).join(' ');
       const episodeSelector = document.getElementById('selectEpisode');
@@ -77,10 +70,7 @@
       getDramaSummary();
       const drama = window.location.pathname.split('/')[2].split('-').join(' ');
       const contentType = document.getElementsByClassName('dotUnder');
-      if (
-        window.location.hostname === 'kissasian.li'
-        && contentType.length > 0
-      ) {
+      if (window.location.hostname === 'kissasian.li' && contentType.length > 0) {
         /* const genre = [...contentType];
         const isMovie = Boolean(genre.find((item) => item.text === 'Movie'));
         const message = isMovie ? `Movie: ${drama}` : `Drama: ${drama}`; */
@@ -89,7 +79,8 @@
           const currentDrama = dramaList.find((item) => item.name === drama);
           const totalEpisodes = document.getElementsByClassName('episodeSub').length;
           const indexOfLastWatchedEpisode = totalEpisodes - currentDrama.lastWatched;
-          document.getElementsByClassName('episodeSub')[indexOfLastWatchedEpisode].children.item(0).text += ' 👀';
+          document
+            .getElementsByClassName('episodeSub')[indexOfLastWatchedEpisode].children.item(0).text += ' 👀';
           for (let i = totalEpisodes - currentDrama.lastWatched; i <= totalEpisodes; i += 1) {
             document.getElementsByClassName('episodeSub')[i].children.item(0).style.color = 'lightgreen';
           }
@@ -105,9 +96,7 @@
     .then((response) => loadDraMaSpy(response))
     .then((list) => {
       if (typeof list === 'object') {
-        browser.runtime.sendMessage(
-          JSON.stringify({ command: 'update', dramaList: list }),
-        );
+        browser.runtime.sendMessage(JSON.stringify({ command: 'update', dramaList: list }));
       }
     });
 }());
