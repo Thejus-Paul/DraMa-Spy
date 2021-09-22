@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "commit": "git add . && lint-staged"
+    "build_browser_actions": "cd browser_action && yarn run build",
+    "generate_extension": "npx web-ext build --overwrite-dest",
+    "build": "npm run build_browser_actions && npm run generate_extension",
+    "staging": "git add . && lint-staged",
+    "commit": "npm run staging && npm run build"
   },
   "author": "",
   "license": "ISC",

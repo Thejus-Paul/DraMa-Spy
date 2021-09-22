@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ReactElement } from 'react';
 import CryptoJS from 'crypto-js';
 import './App.css';
+import PlayButton from './assets/images/circled-play.png';
 
 interface dramaItems {
   name: string;
@@ -157,7 +158,7 @@ function App() {
                               }`}
                             >
                               <img
-                                src="https://img.icons8.com/ios-glyphs/50/000000/circled-play.png"
+                                src={PlayButton}
                                 alt="Resume"
                                 width="20px"
                               />
