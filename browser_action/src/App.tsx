@@ -171,7 +171,7 @@ function App() {
             </div>
           </div>
           <div className="footer">
-            <button>Refresh</button>
+            <button className="refresh-btn">Reset Cache</button>
           </div>
         </div>
       </div>
