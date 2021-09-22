@@ -47,7 +47,7 @@
 }
 
 .body {
-  height: 380px;
+  height: 360px;
   display: flex;
   width: 100%;
   justify-content: center;
@@ -92,4 +92,11 @@
   margin: .5rem 0;
   display: flex;
   justify-content: center;
+}
+
+.footer {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

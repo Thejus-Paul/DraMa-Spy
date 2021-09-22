@@ -170,6 +170,9 @@ function App() {
                   })}
             </div>
           </div>
+          <div className="footer">
+            <button>Refresh</button>
+          </div>
         </div>
       </div>
     </div>
