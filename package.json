@@ -4,7 +4,8 @@
   "description": "Tracks all watched KissAsian dramas and notifies the last watched episode.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "commit": "git add . && lint-staged"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +13,22 @@
     "web-ext": "^6.2.0"
   },
   "devDependencies": {
-    "ansi-regex": ">=6.0.1"
+    "@typescript-eslint/eslint-plugin": "^4.31.2",
+    "ansi-regex": ">=6.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.26.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "lint-staged": "^11.1.2",
+    "prettier": "2.4.1"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --quiet --fix"
+    ],
+    "*.{json,md,html}": [
+      "prettier --write"
+    ]
   }
 }

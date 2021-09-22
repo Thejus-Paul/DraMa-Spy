@@ -55,7 +55,7 @@
       const episodeSelector = document.getElementById('selectEpisode');
       let currentEpisode = episodeSelector[episodeSelector.selectedIndex].value;
       currentEpisode = Number(currentEpisode.split('?')[0].split('-')[1]);
-      const didFind = Boolean(dramaList.find((item) => item.name === drama));
+      let didFind = Boolean(dramaList.find((item) => item.name === drama));
       if (didFind) {
         const foundItem = dramaList.find((item) => item.name === drama);
         foundItem.lastWatched = currentEpisode;
@@ -68,21 +68,23 @@
     // On the drama or movie description page
     if (window.location.pathname.startsWith('/Drama/')) {
       getDramaSummary();
-      const drama = window.location.pathname.split('/')[2].split('-').join(' ');
+      drama = window.location.pathname.split('/')[2].split('-').join(' ');
       const contentType = document.getElementsByClassName('dotUnder');
       if (window.location.hostname === 'kissasian.li' && contentType.length > 0) {
         /* const genre = [...contentType];
         const isMovie = Boolean(genre.find((item) => item.text === 'Movie'));
         const message = isMovie ? `Movie: ${drama}` : `Drama: ${drama}`; */
-        const didFind = Boolean(dramaList.find((item) => item.name === drama));
+        didFind = Boolean(dramaList.find((item) => item.name === drama));
         if (didFind) {
           const currentDrama = dramaList.find((item) => item.name === drama);
           const totalEpisodes = document.getElementsByClassName('episodeSub').length;
           const indexOfLastWatchedEpisode = totalEpisodes - currentDrama.lastWatched;
           document
-            .getElementsByClassName('episodeSub')[indexOfLastWatchedEpisode].children.item(0).text += ' 👀';
+            .getElementsByClassName('episodeSub')
+            [indexOfLastWatchedEpisode].children.item(0).text += ' 👀';
           for (let i = totalEpisodes - currentDrama.lastWatched; i <= totalEpisodes; i += 1) {
-            document.getElementsByClassName('episodeSub')[i].children.item(0).style.color = 'lightgreen';
+            document.getElementsByClassName('episodeSub')[i].children.item(0).style.color =
+              'lightgreen';
           }
         }
       }
@@ -99,4 +101,4 @@
         browser.runtime.sendMessage(JSON.stringify({ command: 'update', dramaList: list }));
       }
     });
-}());
+})();

@@ -20,14 +20,14 @@ function notify(data) {
       .then((response) => response.json())
       .then((response) => response);
   } else if (JSON.parse(data).command === 'update_drama') {
-    const dramaList = JSON.parse(data).drama;
+    const newDramaList = JSON.parse(data).drama;
     fetch('https://sponge-imminent-text.glitch.me/dramaspy/drama', {
       method: 'post',
       mode: 'cors',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
-      body: JSON.stringify(dramaList),
+      body: JSON.stringify(newDramaList),
     });
   }
   return 0;

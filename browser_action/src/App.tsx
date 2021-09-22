@@ -22,7 +22,7 @@ interface dramaInfo {
 }
 
 function App() {
-  const hostname: string = 'https://kissasian.li';
+  const hostname = 'https://kissasian.li';
   const hash = (data: string) => CryptoJS.SHA3(data).toString();
   const verify = (hash1: string, hash2: string) => hash1 === hash2;
   const encrypt = (data: Array<dramaItems>, key: string) =>
@@ -36,8 +36,8 @@ function App() {
   const [searchResults, setSearchResults] = useState<Array<dramaItems>>([]);
 
   // To fetch current hashes from localStorage
-  const watchedListHash: string = String(localStorage.getItem('watchedListHash'));
-  const dramasListHash: string = String(localStorage.getItem('dramasListHash'));
+  const watchedListHash = String(localStorage.getItem('watchedListHash'));
+  const dramasListHash = String(localStorage.getItem('dramasListHash'));
 
   useEffect(() => {
     // To set cached version of watched list
