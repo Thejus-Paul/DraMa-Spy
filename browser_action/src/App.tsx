@@ -42,7 +42,12 @@ function App() {
   useEffect(() => {
     // To set cached version of watched list
     if (localStorage.getItem('watchedList'))
-      setWatchedList(decrypt(String(localStorage.getItem('watchedList')), 'test'));
+      setWatchedList(
+        decrypt(
+          String(localStorage.getItem('watchedList')),
+          String(process.env.REACT_APP_SECRET_CODE),
+        ),
+      );
     // To set cached version of dramas
     if (localStorage.getItem('dramasList'))
       setDramas(JSON.parse(String(localStorage.getItem('dramasList'))));
@@ -74,7 +79,10 @@ function App() {
         if (verify(currentHash, watchedListHash)) console.log('Watched List: No Change');
         else {
           setWatchedList(response.data);
-          window.localStorage.setItem('watchedList', encrypt(response.data, 'test').toString());
+          window.localStorage.setItem(
+            'watchedList',
+            encrypt(response.data, String(process.env.REACT_APP_SECRET_CODE)).toString(),
+          );
           window.localStorage.setItem('watchedListHash', currentHash);
           console.log('Watched List: Cached Data');
         }
