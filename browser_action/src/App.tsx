@@ -53,7 +53,21 @@ function App() {
     // To set cached version of dramas
     if (localStorage.getItem('dramasList'))
       setDramas(JSON.parse(String(localStorage.getItem('dramasList'))));
-  }, []);
+
+    // To check for extension updates
+    const checkForUpdate = async () => {
+      try {
+        const response = await fetch("https://api.github.com/repos/Thejus-Paul/DraMa-Spy/releases");
+        const parsedResponse = await response.json();
+        if (parsedResponse[0].tag_name !== currVersion)
+          setCurrVersion('New Version Available!');
+      } catch (e) {
+        console.error('exceeded API limit! Try after an hour.');
+      }
+    }
+
+    checkForUpdate();
+  }, [currVersion]);
 
   // To fetch and update dramas
   useEffect(() => {
@@ -90,20 +104,6 @@ function App() {
         }
       });
   }, [watchedListHash]);
-
-  // To check for extension updates
-  useEffect(() => {
-      fetch("https://api.github.com/repos/Thejus-Paul/DraMa-Spy/releases")
-      .then(response => response.json())
-      .then(response => {
-        if(response[0].tag_name !== currVersion)
-          setCurrVersion('New Version Available!')
-      })
-      .catch(() => {
-        console.error('exceeded API limit! Try after an hour.')
-      })
-  },[currVersion]);
-
 
   const handleInput = (value: string) => {
     setSearchStr(value);
