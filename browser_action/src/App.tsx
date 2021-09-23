@@ -35,6 +35,7 @@ function App() {
   const [watchedList, setWatchedList] = useState<Array<dramaItems>>([]);
   const [searchStr, setSearchStr] = useState<string>('');
   const [searchResults, setSearchResults] = useState<Array<dramaItems>>([]);
+  const [currVersion, setCurrVersion] = useState('v1.2');
 
   // To fetch current hashes from localStorage
   const watchedListHash = String(localStorage.getItem('watchedListHash'));
@@ -89,6 +90,20 @@ function App() {
         }
       });
   }, [watchedListHash]);
+
+  // To check for extension updates
+  useEffect(() => {
+      fetch("https://api.github.com/repos/Thejus-Paul/DraMa-Spy/releases")
+      .then(response => response.json())
+      .then(response => {
+        if(response[0].tag_name !== currVersion)
+          setCurrVersion('New Version Available!')
+      })
+      .catch(() => {
+        console.error('exceeded API limit! Try after an hour.')
+      })
+  },[currVersion]);
+
 
   const handleInput = (value: string) => {
     setSearchStr(value);
@@ -177,6 +192,7 @@ function App() {
           </div>
           <div className="footer">
             <button className="refresh-btn" onClick={refreshCache}>Reset Cache</button>
+            <label className="version">{currVersion}</label>
           </div>
         </div>
       </div>
