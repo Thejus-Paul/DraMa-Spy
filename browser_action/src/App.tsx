@@ -64,8 +64,8 @@ function App() {
         if (verify(currentHash, dramasListHash)) console.log('Dramas: No Change');
         else {
           setDramas(response);
-          window.localStorage.setItem('dramasList', stringifiedResponse);
-          window.localStorage.setItem('dramasListHash', currentHash);
+          localStorage.setItem('dramasList', stringifiedResponse);
+          localStorage.setItem('dramasListHash', currentHash);
           console.log('Dramas: Cached Data');
         }
       });
@@ -80,11 +80,11 @@ function App() {
         if (verify(currentHash, watchedListHash)) console.log('Watched List: No Change');
         else {
           setWatchedList(response.data);
-          window.localStorage.setItem(
+          localStorage.setItem(
             'watchedList',
             encrypt(response.data, String(process.env.REACT_APP_SECRET_CODE)).toString(),
           );
-          window.localStorage.setItem('watchedListHash', currentHash);
+          localStorage.setItem('watchedListHash', currentHash);
           console.log('Watched List: Cached Data');
         }
       });
@@ -102,6 +102,11 @@ function App() {
     if (drama) return <img src={drama.image} alt={drama.name} />;
     return <span></span>;
   };
+
+  const refreshCache = () => {
+    localStorage.clear();
+    window.location.reload();
+  }
 
   return (
     <div className="App">
@@ -169,6 +174,9 @@ function App() {
                     );
                   })}
             </div>
+          </div>
+          <div className="footer">
+            <button className="refresh-btn" onClick={refreshCache}>Reset Cache</button>
           </div>
         </div>
       </div>
