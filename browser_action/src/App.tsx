@@ -118,6 +118,7 @@ function App() {
     return <span></span>;
   };
 
+
   const refreshCache = () => {
     localStorage.clear();
     window.location.reload();
@@ -177,11 +178,14 @@ function App() {
                                 drama.lastWatched + 1
                               }`}
                             >
-                              <img
+                              {
+                                (dramas.find((item) => item.name === drama.name)?.latestEpisode !== drama.lastWatched) ?
+                                <img
                                 src={PlayButton}
                                 alt="Resume"
                                 width="20px"
-                              />
+                              /> : ''
+                              }
                             </a>
                           </span>
                         </div>
