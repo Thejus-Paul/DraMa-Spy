@@ -154,11 +154,14 @@ function App() {
                                 drama.lastWatched + 1
                               }`}
                             >
-                              <img
-                                src="https://img.icons8.com/ios-glyphs/50/000000/circled-play.png"
+                              {
+                                (dramas.find((item) => item.name === drama.name)?.latestEpisode !== drama.lastWatched) ?
+                                <img
+                                src={PlayButton}
                                 alt="Resume"
                                 width="20px"
-                              />
+                              /> : ''
+                              }
                             </a>
                           </span>
                         </div>
