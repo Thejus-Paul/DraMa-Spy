@@ -31,12 +31,12 @@ interface dramaListProps {
 
 const DramaList = (props: dramaListProps) => {
   const hostname = 'https://kissasian.li';
-  
+
   return(
     <div className="dramas">
     {(props.searchStr.length > 0) ? props.searchResults.map((drama, index) => {
         return (
-          <div className="drama_item" key={index}>
+          <div className="drama-item" key={index}>
             {props.fetchDramaImg(drama.name)}
             <div className="details">
               <strong>{drama.name}</strong>
@@ -59,7 +59,7 @@ const DramaList = (props: dramaListProps) => {
       })
     : props.watchedList.map((drama, index) => {
         return (
-          <div className="drama_item" key={index}>
+          <div className="drama-item" key={index}>
             {props.fetchDramaImg(drama.name)}
             <div className="details">
               <strong>{drama.name}</strong>
