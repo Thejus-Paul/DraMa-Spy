@@ -1,8 +1,8 @@
-import React, { useState, useEffect, ReactElement } from 'react';
+import React, { useState, useEffect, ReactElement, JSXElementConstructor } from 'react';
 import CryptoJS from 'crypto-js';
 import './App.css';
-import PlayButton from './assets/images/circled-play.png';
 import SearchBox from './components/SearchBox';
+import DramaList from './components/DramaList';
 
 interface dramaItems {
   name: string;
@@ -24,7 +24,6 @@ interface dramaInfo {
 }
 
 function App() {
-  const hostname = 'https://kissasian.li';
   const hash = (data: string) => CryptoJS.SHA3(data).toString();
   const verify = (hash1: string, hash2: string) => hash1 === hash2;
   const encrypt = (data: Array<dramaItems>, key: string) =>
@@ -113,7 +112,7 @@ function App() {
     );
   };
 
-  const fetchDramaImg = (name: string): ReactElement => {
+  const fetchDramaImg = (name: string): ReactElement<JSXElementConstructor<any>> => {
     const drama = dramas.find((item) => item.name === name);
     if (drama) return <img src={drama.image} alt={drama.name} />;
     return <span></span>;
@@ -134,63 +133,7 @@ function App() {
             <SearchBox handleInput={handleInput} />
           </div>
           <div className="body">
-            <div className="dramas">
-              {searchStr.length > 0
-                ? searchResults.map((drama, index) => {
-                    return (
-                      <div className="drama_item" key={index}>
-                        {fetchDramaImg(drama.name)}
-                        <div className="details">
-                          <strong>{drama.name}</strong>
-                          <span>
-                            <span>Last Watched: {drama.lastWatched}&nbsp;</span>
-                            <a
-                              href={`${hostname}/Drama/${drama.name.split(' ').join('-')}/Episode-${
-                                drama.lastWatched + 1
-                              }`}
-                            >
-                              {
-                                (dramas.find((item) => item.name === drama.name)?.latestEpisode !== drama.lastWatched) ?
-                                <img
-                                src={PlayButton}
-                                alt="Resume"
-                                width="20px"
-                              /> : ''
-                              }
-                            </a>
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })
-                : watchedList.map((drama, index) => {
-                    return (
-                      <div className="drama_item" key={index}>
-                        {fetchDramaImg(drama.name)}
-                        <div className="details">
-                          <strong>{drama.name}</strong>
-                          <span>
-                            <span>Last Watched: {drama.lastWatched}&nbsp;</span>
-                            <a
-                              href={`${hostname}/Drama/${drama.name.split(' ').join('-')}/Episode-${
-                                drama.lastWatched + 1
-                              }`}
-                            >
-                              {
-                                (dramas.find((item) => item.name === drama.name)?.latestEpisode !== drama.lastWatched) ?
-                                <img
-                                src={PlayButton}
-                                alt="Resume"
-                                width="20px"
-                              /> : ''
-                              }
-                            </a>
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
-            </div>
+            <DramaList searchStr={searchStr} searchResults={searchResults} fetchDramaImg={fetchDramaImg} dramas={dramas} watchedList={watchedList} />
           </div>
           <div className="footer">
             <button className="refresh-btn" onClick={refreshCache}>Reset Cache</button>
