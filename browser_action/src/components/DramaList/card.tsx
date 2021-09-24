@@ -1,5 +1,4 @@
-import { ReactElement, JSXElementConstructor } from 'react';
-import { TextSpan } from 'typescript';
+import { ReactElement } from 'react';
 import PlayButton from '../../assets/images/circled-play.png';
 
 interface dramaInfo {
@@ -22,25 +21,25 @@ interface dramaCardProps {
   dramas: Array<dramaInfo>
 }
 
-const DramaCard = (props: dramaCardProps) => {
+const DramaCard = ({name, lastWatched, dramas}: dramaCardProps) => {
   const hostname = 'https://kissasian.li';
 
-  const fetchDramaImg = (name: string): ReactElement<JSXElementConstructor<any>> => {
-    const drama = props.dramas.find((item) => item.name === name);
+  const fetchDramaImg = (name: string): ReactElement<HTMLImageElement> => {
+    const drama = dramas.find((item) => item.name === name);
     if (drama) return <img src={drama.image} alt={drama.name} />;
-    return <span></span>;
+    return <img src="#" alt={name} />;
   };
 
   return(
     <div className="drama-item">
-      {fetchDramaImg(props.name)}
+      {fetchDramaImg(name)}
       <div className="details">
-        <strong>{props.name}</strong>
+        <strong>{name}</strong>
         <span>
-          <span>Last Watched: {props.lastWatched}&nbsp;</span>
+          <span>Last Watched: {lastWatched}&nbsp;</span>
           <a
-            href={`${hostname}/Drama/${props.name.split(' ').join('-')}/Episode-${props.lastWatched + 1}`}>
-            {(props.dramas.find((item) => item.name === props.name)?.latestEpisode !== props.lastWatched) ?
+            href={`${hostname}/Drama/${name.split(' ').join('-')}/Episode-${lastWatched + 1}`}>
+            {(dramas.find((item) => item.name === name)?.latestEpisode !== lastWatched) ?
               <img
               src={PlayButton}
               alt="Resume"

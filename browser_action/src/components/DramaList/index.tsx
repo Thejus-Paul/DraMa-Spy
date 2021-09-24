@@ -27,18 +27,18 @@ interface dramaListProps {
   watchedList:Array<dramaItems>
 }
 
-const DramaList = (props: dramaListProps) => {
+const DramaList = ({searchStr, searchResults, dramas, watchedList}: dramaListProps) => {
 
   return(
     <div className="dramas">
-    {(props.searchStr.length > 0) ? props.searchResults.map((drama, index) => {
+    {(searchStr.length > 0) ? searchResults.map((drama, index) => {
         return (
-          <DramaCard key={index} {...drama} dramas={props.dramas} />
+          <DramaCard key={index} {...drama} dramas={dramas} />
         );
       })
-    : props.watchedList.map((drama, index) => {
+    : watchedList.map((drama, index) => {
         return (
-          <DramaCard key={index} {...drama} dramas={props.dramas} />
+          <DramaCard key={index} {...drama} dramas={dramas} />
         );
       })
     }

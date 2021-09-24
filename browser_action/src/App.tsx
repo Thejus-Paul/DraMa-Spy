@@ -24,11 +24,11 @@ interface dramaInfo {
 }
 
 function App() {
-  const hash = (data: string) => CryptoJS.SHA3(data).toString();
-  const verify = (hash1: string, hash2: string) => hash1 === hash2;
-  const encrypt = (data: Array<dramaItems>, key: string) =>
+  const hash = (data: string): string => CryptoJS.SHA3(data).toString();
+  const verify = (hash1: string, hash2: string): boolean => hash1 === hash2;
+  const encrypt = (data: Array<dramaItems>, key: string): string =>
     CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
-  const decrypt = (cipher: string, key: string) =>
+  const decrypt = (cipher: string, key: string): Array<dramaItems> =>
     JSON.parse(CryptoJS.AES.decrypt(cipher, key).toString(CryptoJS.enc.Utf8));
 
   const [dramas, setDramas] = useState<Array<dramaInfo>>([]);
@@ -105,14 +105,14 @@ function App() {
       });
   }, [watchedListHash]);
 
-  const handleInput = (value: string) => {
+  const handleInput = (value: string): void => {
     setSearchStr(value);
     setSearchResults(
       watchedList.filter((item) => item.name.toLowerCase().includes(value.toLowerCase())),
     );
   };
 
-  const refreshCache = () => {
+  const refreshCache = (): void => {
     localStorage.clear();
     window.location.reload();
   }
