@@ -2,6 +2,7 @@ import React, { useState, useEffect, ReactElement } from 'react';
 import CryptoJS from 'crypto-js';
 import './App.css';
 import PlayButton from './assets/images/circled-play.png';
+import SearchBox from './components/SearchBox';
 
 interface dramaItems {
   name: string;
@@ -124,19 +125,13 @@ function App() {
     window.location.reload();
   }
 
+
   return (
     <div className="App">
       <div className="main">
         <div className="backdrop">
           <div className="header">
-            <input
-              type="text"
-              id="search"
-              placeholder="Enter keyword"
-              onChange={(e) => handleInput(e.target.value)}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus={true}
-            />
+            <SearchBox handleInput={handleInput} />
           </div>
           <div className="body">
             <div className="dramas">
