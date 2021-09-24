@@ -71,38 +71,40 @@ function App() {
 
   // To fetch and update dramas
   useEffect(() => {
-    fetch('https://sponge-imminent-text.glitch.me/dramaspy/drama')
-      .then((response) => response.json())
-      .then((response) => {
-        const stringifiedResponse = JSON.stringify(response);
-        const currentHash = hash(stringifiedResponse);
-        if (verify(currentHash, dramasListHash)) console.log('Dramas: No Change');
-        else {
-          setDramas(response);
-          localStorage.setItem('dramasList', stringifiedResponse);
-          localStorage.setItem('dramasListHash', currentHash);
-          console.log('Dramas: Cached Data');
+    const fetchDramaList = async () => {
+      const response = await fetch('https://sponge-imminent-text.glitch.me/dramaspy/drama')
+      const parsedResponse = await response.json()
+      const stringifiedResponse = JSON.stringify(parsedResponse);
+      const currentHash = hash(stringifiedResponse);
+      if (verify(currentHash, dramasListHash)) console.log('Dramas: No Change');
+      else {
+        setDramas(parsedResponse);
+        localStorage.setItem('dramasList', stringifiedResponse);
+        localStorage.setItem('dramasListHash', currentHash);
+        console.log('Dramas: Cached Data');
         }
-      });
+      }
+    fetchDramaList();
   }, [dramasListHash]);
 
   // To fetch and update watched list
   useEffect(() => {
-    fetch('https://sponge-imminent-text.glitch.me/dramaspy/list')
-      .then((response) => response.json())
-      .then((response) => {
-        const currentHash = hash(JSON.stringify(response.data));
-        if (verify(currentHash, watchedListHash)) console.log('Watched List: No Change');
-        else {
-          setWatchedList(response.data);
-          localStorage.setItem(
-            'watchedList',
-            encrypt(response.data, String(process.env.REACT_APP_SECRET_CODE)).toString(),
-          );
-          localStorage.setItem('watchedListHash', currentHash);
-          console.log('Watched List: Cached Data');
-        }
-      });
+    const fetchWatchedList = async () => {
+      const response = await fetch('https://sponge-imminent-text.glitch.me/dramaspy/list')
+      const parsedResponse = await response.json()
+      const currentHash = hash(JSON.stringify(parsedResponse.data));
+      if (verify(currentHash, watchedListHash)) console.log('Watched List: No Change');
+      else {
+        setWatchedList(parsedResponse.data);
+        localStorage.setItem(
+          'watchedList',
+          encrypt(parsedResponse.data, String(process.env.REACT_APP_SECRET_CODE)).toString(),
+        );
+        localStorage.setItem('watchedListHash', currentHash);
+        console.log('Watched List: Cached Data');
+      }
+    }
+    fetchWatchedList();
   }, [watchedListHash]);
 
   const handleInput = (value: string): void => {
