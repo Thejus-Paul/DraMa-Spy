@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactElement, JSXElementConstructor } from 'react';
+import React, { useState, useEffect } from 'react';
 import CryptoJS from 'crypto-js';
 import './App.css';
 import SearchBox from './components/SearchBox';
@@ -112,18 +112,10 @@ function App() {
     );
   };
 
-  const fetchDramaImg = (name: string): ReactElement<JSXElementConstructor<any>> => {
-    const drama = dramas.find((item) => item.name === name);
-    if (drama) return <img src={drama.image} alt={drama.name} />;
-    return <span></span>;
-  };
-
-
   const refreshCache = () => {
     localStorage.clear();
     window.location.reload();
   }
-
 
   return (
     <div className="App">
@@ -133,7 +125,7 @@ function App() {
             <SearchBox handleInput={handleInput} />
           </div>
           <div className="body">
-            <DramaList searchStr={searchStr} searchResults={searchResults} fetchDramaImg={fetchDramaImg} dramas={dramas} watchedList={watchedList} />
+            <DramaList searchStr={searchStr} searchResults={searchResults} dramas={dramas} watchedList={watchedList} />
           </div>
           <div className="footer">
             <button className="refresh-btn" onClick={refreshCache}>Reset Cache</button>

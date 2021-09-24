@@ -1,6 +1,4 @@
-import { ReactElement, JSXElementConstructor } from 'react';
 import DramaCard from './card';
-
 import './index.css';
 
 interface dramaItems {
@@ -24,8 +22,7 @@ interface dramaInfo {
 
 interface dramaListProps {
   searchStr:string,
-  searchResults: any[],
-  fetchDramaImg: (arg0: string) => ReactElement<JSXElementConstructor<any>>,
+  searchResults: Array<dramaItems>,
   dramas: Array<dramaInfo>,
   watchedList:Array<dramaItems>
 }
@@ -36,12 +33,12 @@ const DramaList = (props: dramaListProps) => {
     <div className="dramas">
     {(props.searchStr.length > 0) ? props.searchResults.map((drama, index) => {
         return (
-          <DramaCard key={index} {...drama} fetchDramaImg={props.fetchDramaImg} dramas={props.dramas} />
+          <DramaCard key={index} {...drama} dramas={props.dramas} />
         );
       })
     : props.watchedList.map((drama, index) => {
         return (
-          <DramaCard key={index} {...drama} fetchDramaImg={props.fetchDramaImg} dramas={props.dramas} />
+          <DramaCard key={index} {...drama} dramas={props.dramas} />
         );
       })
     }

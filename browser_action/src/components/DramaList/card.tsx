@@ -1,4 +1,5 @@
 import { ReactElement, JSXElementConstructor } from 'react';
+import { TextSpan } from 'typescript';
 import PlayButton from '../../assets/images/circled-play.png';
 
 interface dramaInfo {
@@ -16,7 +17,6 @@ interface dramaInfo {
 }
 
 interface dramaCardProps {
-  fetchDramaImg: (arg0: string) => ReactElement<JSXElementConstructor<any>>,
   name: string,
   lastWatched: number,
   dramas: Array<dramaInfo>
@@ -24,9 +24,16 @@ interface dramaCardProps {
 
 const DramaCard = (props: dramaCardProps) => {
   const hostname = 'https://kissasian.li';
+
+  const fetchDramaImg = (name: string): ReactElement<JSXElementConstructor<any>> => {
+    const drama = props.dramas.find((item) => item.name === name);
+    if (drama) return <img src={drama.image} alt={drama.name} />;
+    return <span></span>;
+  };
+
   return(
     <div className="drama-item">
-      {props.fetchDramaImg(props.name)}
+      {fetchDramaImg(props.name)}
       <div className="details">
         <strong>{props.name}</strong>
         <span>
